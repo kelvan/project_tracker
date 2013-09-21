@@ -4,3 +4,5 @@ see *.example for example config
 
 per project recipients only working if -p option used
 I will fix this
+
+pygal is needed for the chart option
