@@ -6,3 +6,4 @@ per project recipients only working if -p option used
 I will fix this
 
 pygal is needed for the chart option
+Make sure you have texlive and pdflatex installed if you want to use the invoice generator
