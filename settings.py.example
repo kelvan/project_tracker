@@ -1,0 +1,12 @@
+from os.path import join
+
+invoicedirectory = 'invoices'
+# tex files
+texdir = join(invoicedirectory, 'tex')
+# compiled pdf invoices
+pdfdir = join(invoicedirectory, 'pdf')
+# template to use
+templatefile = "template.tex"
+
+# create pie chart with -c option; more charts will follow
+charts = ['project_distribution_hours']

@@ -1,0 +1,18 @@
+# Custumer1
+cust1_addr = r'Usability \& Design \\ Street 2 \\ A-1234 Vienna'
+cust1_proj = {'rate': 30, 'recipient': cust1_addr}
+
+# Custumer1
+cust1_addr = r'Usability \& Design \\ Street 2 \\ A-1234 Vienna'
+cust1_proj = {'rate': 30, 'recipient': cust1_addr}
+
+# Custumer2
+cust2_addr = r'Dr. Evil \\ OtherStreet 42 \\ D-12345 Berlin'
+cust2_proj = {'rate': 50, 'recipient': cust2_addr}
+
+# Use lowercase names
+PROJECTS = {'project1': cust1_proj,
+            'project2': cust1_proj,
+            'project3': cust2_proj,
+            'project4': cust2_proj
+           }

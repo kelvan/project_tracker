@@ -1,0 +1,53 @@
+\documentclass{letter}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{invoice}
+\usepackage{fancyhdr}
+
+\address{firstname lastname \\ Street 1 \\ A-1234 Vienna \\ user@example.org \\ http://www.example.org}
+\signature{firstname lastname}
+\date{2013-09-22}
+
+\makeatletter
+\renewcommand*{\opening}[1]{\ifx\@empty\fromaddress%
+  \thispagestyle{firstpage}%
+    {\raggedleft\@date\par}%
+  \else% home address
+   \thispagestyle{empty}%
+   {%
+    \begin{minipage}[t]{0.50\linewidth}
+        \toname \\
+        \toaddress
+    \end{minipage}
+    \begin{minipage}[t]{0.45\linewidth}
+        \raggedleft\begin{tabular}[t]{l@{}}\ignorespaces
+            \fromaddress\\[1.0em]% replace 1.0em with space desired before date
+            \@date
+        \end{tabular}
+    \end{minipage}
+    \par
+}%
+\fi
+\vspace{2\parskip}%
+#1\par\nobreak}
+\makeatother
+
+\begin{document}
+  \begin{letter}{Usability \& Design \\ Street 2 \\ A-1234 Vienna}
+    \opening{Invoice no. 130901}
+    \thispagestyle{fancy}
+    
+    \begin{invoice}{Euro}{0}
+              \ProjectTitle{Project4}
+                  \Fee{Development} {50} {1.0}
+                      \ProjectTitle{Project3}
+                  \Fee{Development} {50} {32.0}
+                  \end{invoice}
+    \closing{Please transfer fees within 14 days,}
+
+    \cfoot{}
+    \lfoot{IBAN: AT123456789012345678 \\ BIC: ABCDATA1}
+    %\rfoot{}
+
+  \end{letter}
+\end{document}

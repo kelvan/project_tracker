@@ -1,0 +1,6 @@
+see hours_per_project.py -h for usage
+
+see *.example for example config
+
+per project recipients only working if -p option used
+I will fix this

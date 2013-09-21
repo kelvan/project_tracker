@@ -1,0 +1,18 @@
+#coding: UTF-8
+# remove/add any part you like, make sure to use \\ for linebreaks
+address = r"firstname lastname \\ Street 1 \\ A-1234 Vienna \\ user@example.org \\ http://www.example.org"
+iban = "AT123456789012345678"
+bic = "ABCDATA1"
+name = "firstname lastname"
+# not neccessary
+greeting = ""
+# You probably want to change this
+closing = u"Please transfer fees within 14 days,"
+currency = "Euro"
+# set your taxes
+vat = 0
+
+# rate per hour, can be overwritten per project in project_settings.py
+rate = 25
+# ensure to escape "&" and similar characters to use latex/pdf output
+recipient = r'Usability \& Design \\ Street 2 \\ A-1234 Vienna'

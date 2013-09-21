@@ -1,0 +1,55 @@
+\documentclass{letter}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{invoice}
+\usepackage{fancyhdr}
+
+\address{\VAR{invoice.address}}
+\signature{\VAR{invoice.name}}
+\date{\VAR{invoice.date}}
+
+\makeatletter
+\renewcommand*{\opening}[1]{\ifx\@empty\fromaddress%
+  \thispagestyle{firstpage}%
+    {\raggedleft\@date\par}%
+  \else% home address
+   \thispagestyle{empty}%
+   {%
+    \begin{minipage}[t]{0.50\linewidth}
+        \toname \\
+        \toaddress
+    \end{minipage}
+    \begin{minipage}[t]{0.45\linewidth}
+        \raggedleft\begin{tabular}[t]{l@{}}\ignorespaces
+            \fromaddress\\[1.0em]% replace 1.0em with space desired before date
+            \@date
+        \end{tabular}
+    \end{minipage}
+    \par
+}%
+\fi
+\vspace{2\parskip}%
+#1\par\nobreak}
+\makeatother
+
+\begin{document}
+  \begin{letter}{\VAR{invoice.recipient}}
+    \opening{Invoice no. \VAR{invoice.number}}
+    \thispagestyle{fancy}
+    \VAR{invoice.greeting}
+    \begin{invoice}{\VAR{invoice.currency}}{\VAR{invoice.vat}}
+      \BLOCK{for project in invoice.projects}
+        \ProjectTitle{\VAR{project.name}}
+        \BLOCK{for fee in project.fees}
+          \Fee{\VAR{fee.type}} {\VAR{fee.rate}} {\VAR{fee.hours}}
+        \BLOCK{endfor}
+      \BLOCK{endfor}
+    \end{invoice}
+    \closing{\VAR{invoice.closing}}
+
+    \cfoot{}
+    \lfoot{IBAN: \VAR{invoice.iban} \\ BIC: \VAR{invoice.bic}}
+    %\rfoot{}
+
+  \end{letter}
+\end{document}

@@ -1,0 +1,13 @@
+*~
+*.swp
+*.tex
+*.pdf
+*.aux
+*log
+*.pyc
+__pyshare__
+invoices
+settings.py
+project_settings.py
+defaults.py
+*.private

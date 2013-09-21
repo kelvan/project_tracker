@@ -1,0 +1,15 @@
+date;project;hours;note
+2012-05-24;Project1;0.5;do some stuff
+2012-05-28;Project2;2.0;different stuff
+2012-05-30;Project1;1.5;stuff
+2012-05-31;Project1;4.5;this notes are not used by the script
+2012-07-08;Project1;7.5;use note column to remember what you've done if somebody asks :)
+2012-07-09;Project1;3.5;and again stuff for Project1
+2012-07-10;Project1;5.0;finalising the doomsdaydevice
+2013-01-14;Project2;1.5;feed the cats
+2013-01-14;Project1;8.0;world domination
+2013-05-08;CLEARED;0.0;Everything paid, use -u to show only items after this line
+2013-06-25;Project3;20.0;build doomstar
+2013-07-11;Project3;10.0;start an evil empire
+2013-07-16;Project4;0.5;post cat pictures on twitter
+2013-07-16;Project3;2.0;hunt skywalker
