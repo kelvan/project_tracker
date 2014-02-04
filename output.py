@@ -38,25 +38,25 @@ def console(invoice):
     r_avg = w_sum/h_sum
 
     # print header
-    print ' | '.join([head_proj.ljust(p_len),
+    print(' | '.join([head_proj.ljust(p_len),
                       head_hours.rjust(h_len),
                       head_rate.rjust(r_len),
-                      head_wage.rjust(w_len+1)])
-    print hline()
+                      head_wage.rjust(w_len+1)]))
+    print(hline())
 
     # print project information
     for project in invoice:
         proj_rate = project.avg_rate
-        print u'%s | %s | %s | €%s' % (project.name.ljust(p_len),
+        print(u'%s | %s | %s | €%s' % (project.name.ljust(p_len),
               ('%0.1f' % project.sum_hours).rjust(h_len),
               ('%0.2f' % proj_rate).rjust(r_len),
-              ('%0.2f' % project.sum_money).rjust(w_len))
+              ('%0.2f' % project.sum_money).rjust(w_len)))
 
-    print hline()
+    print(hline())
     # print summary
-    print u'%s | %s | €%s' % (('%0.1f' % h_sum).rjust(c_len),
+    print(u'%s | %s | €%s' % (('%0.1f' % h_sum).rjust(c_len),
                               ('%.2f' % r_avg).rjust(r_len),
-                              ('%0.2f' % w_sum).rjust(w_len))
+                              ('%0.2f' % w_sum).rjust(w_len)))
 
 def pdf(invoice):
     #TODO

@@ -22,5 +22,5 @@ def convert_dict(dic):
 def load_from_csv(filename):
     with open(filename,'r') as f:
         reader = csv.DictReader(f, delimiter=';')
-        lst = map(convert_dict, reader)
+        lst = list(map(convert_dict, reader))
     return lst

@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python
 #coding: UTF-8
 
 import sys
@@ -105,7 +105,7 @@ charts = args.charts
 try:
     lst = load_from_csv(args.inputfile)
 except ValueError as e:
-    print e.message
+    print(e.message)
     sys.exit(1)
 
 for w in lst:
@@ -122,7 +122,7 @@ for w in lst:
 
         h = float(w['hours'])
 
-        if hours.has_key(prj):
+        if prj in hours:
             h += hours[prj]
         hours[prj] = h
 
