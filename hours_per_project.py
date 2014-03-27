@@ -110,15 +110,16 @@ except ValueError as e:
 
 for w in lst:
     prj = w['project']
+
+    if prj == 'CLEARED':
+        if uncleared:
+            hours = {}
+            invoice.projects = []
+        continue
+
     if (not year or w['date'].year==year) and \
                 (not month or w['date'].month==month) and \
                 (not project or project.lower()==prj.lower()):
-
-        if prj == 'CLEARED':
-            if uncleared:
-                hours = {}
-                invoice.projects = []
-            continue
 
         h = float(w['hours'])
 
