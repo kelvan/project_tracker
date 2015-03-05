@@ -25,6 +25,11 @@ parser.add_argument('-m', metavar='month', help='filter by month',
                     default=None, dest='month', type=int)
 parser.add_argument('-y', metavar='year', help='filter by year',
                     default=None, dest='year', type=int)
+parser.add_argument('-d', metavar='day', help='filter by day',
+                    default=None, dest='day', type=int)
+# TODO Today invalid with day, month, year set
+parser.add_argument('-t', '--today', action="store_true",
+                    help='show today')
 parser.add_argument('-p', metavar='project', help='filter by project',
                     default=None, dest='project')
 parser.add_argument('-i', '--invoice', action="store_true",
@@ -79,18 +84,40 @@ settings.update(date=today, number=get_invoicenumber(today))
 
 invoice = Invoice(**settings)
 
+today = date.today()
+
+day = None
+if args.day:
+    day = args.day
+
+# XXX use tuple (from, to) as date range
+month = None
 if args.month:
     month = args.month
-else:
-    month = None
+elif day:
+    month = today.month
+    if day > today.day:
+        # XXX should be replaced after building date range
+        month = month - 1 if month > 1 else 12
 
+year = None
 if args.year:
     if args.year >= 1000:
         year = args.year
     else:
         year = args.year + 2000
-else:
-    year = None
+elif month:
+    year = today.year
+    if month > today.month:
+        year -= 1
+
+if args.today:
+    year, month, day = today.timetuple()[:3]
+
+date_ = [year, month, day]
+formatted_date = '-'.join([str(d).zfill(2) for d in date_ if d])
+if formatted_date:
+    print('Show for: %s' % formatted_date)
 
 rnd = args.round
 uncleared = args.uncleared
@@ -119,6 +146,7 @@ for w in lst:
 
     if (not year or w['date'].year==year) and \
                 (not month or w['date'].month==month) and \
+                (not day or w['date'].day==day) and \
                 (not project or project.lower()==prj.lower()):
 
         h = float(w['hours'])
