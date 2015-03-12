@@ -7,6 +7,7 @@ from settings import *
 
 from jinja2 import Environment, PackageLoader
 
+
 def get_environment():
     # The environment
     latex_jinja_env = Environment(block_start_string = '\BLOCK{',

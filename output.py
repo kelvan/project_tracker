@@ -4,6 +4,7 @@ import latex
 import chart
 import settings
 
+
 def console(invoice):
     def hline():
         return '+'.join(['-'*(p_len+1), '-'*(r_len),'-'*(h_len+4),'-'*(w_len+2)])
