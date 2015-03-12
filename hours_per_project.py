@@ -1,8 +1,6 @@
 #!/usr/bin/python
-#coding: UTF-8
 
 import sys
-import codecs
 import os
 from os.path import dirname, join
 import subprocess
@@ -18,34 +16,37 @@ from invoice import *
 from settings import *
 from project_settings import PROJECTS
 
-parser = argparse.ArgumentParser(description='Get overview of your projects and generate invoices')
+parser = argparse.ArgumentParser(description='Get overview of your projects '
+                                 'and generate invoices')
 parser.add_argument(metavar='filename', help='specify input timesheet',
                     dest='inputfile')
-parser.add_argument('-m', metavar='month', help='filter by month',
-                    default=None, dest='month', type=int)
-parser.add_argument('-y', metavar='year', help='filter by year',
-                    default=None, dest='year', type=int)
-parser.add_argument('-d', metavar='day', help='filter by day',
-                    default=None, dest='day', type=int)
+group = parser.add_mutually_exclusive_group()
+date_group = group.add_argument_group('Date filter')
+date_group.add_argument('-m', metavar='month', help='filter by month',
+                        default=None, dest='month', type=int)
+date_group.add_argument('-y', metavar='year', help='filter by year',
+                        default=None, dest='year', type=int)
+date_group.add_argument('-d', metavar='day', help='filter by day',
+                        default=None, dest='day', type=int)
 # TODO Today invalid with day, month, year set
-parser.add_argument('-t', '--today', action="store_true",
-                    help='show today')
+group.add_argument('-t', '--today', action='store_true',
+                   help='show today')
 parser.add_argument('-p', metavar='project', help='filter by project',
                     default=None, dest='project')
-parser.add_argument('-i', '--invoice', action="store_true",
+parser.add_argument('-i', '--invoice', action='store_true',
                     help='generate invoice splitted per project')
 parser.add_argument('-r', '--round', action="store_true",
                     help='round hours')
-parser.add_argument('-u', '--uncleared', action="store_true",
+parser.add_argument('-u', '--uncleared', action='store_true',
                     help='Show only uncleared hours')
 parser.add_argument('-w', '--hourly_rate', type=float,
                     help='overwrite hourly wage rate')
-parser.add_argument('-c', '--charts', action="store_true",
+parser.add_argument('-c', '--charts', action='store_true',
                     help='Render charts in browser')
 
 args = parser.parse_args()
 
-hours = {} # projectname:hours
+hours = {}  # projectname: hours
 lst = []
 
 if args.project:
@@ -56,6 +57,7 @@ else:
 invoicedirectory = join(dirname(__file__), 'invoices')
 pdfdir = join(invoicedirectory, 'pdf')
 texdir = join(invoicedirectory, 'tex')
+
 
 def get_invoicenumber(dte):
     dt = datetime.strftime(dte, '%y%m')
@@ -69,6 +71,7 @@ def get_invoicenumber(dte):
 
 today = date.today()
 
+
 def project_or_default_settings(project, item):
     if project is None or not project.lower() in PROJECTS:
         return getattr(defaults, item)
@@ -76,6 +79,7 @@ def project_or_default_settings(project, item):
     proj_settings = PROJECTS[project.lower()]
 
     return proj_settings.get(item, getattr(defaults, item, None))
+
 
 vals = ['address', 'name', 'recipient', 'greeting', 'closing', 'currency',
         'vat', 'iban', 'bic']
@@ -144,10 +148,10 @@ for w in lst:
             invoice.projects = []
         continue
 
-    if (not year or w['date'].year==year) and \
-                (not month or w['date'].month==month) and \
-                (not day or w['date'].day==day) and \
-                (not project or project.lower()==prj.lower()):
+    if (not year or w['date'].year == year) and \
+       (not month or w['date'].month == month) and \
+       (not day or w['date'].day == day) and \
+       (not project or project.lower() == prj.lower()):
 
         h = float(w['hours'])
 
@@ -161,7 +165,11 @@ if rnd:
 
 for proj, h in hours.items():
     p = Project(proj)
-    c_rate = project_or_default_settings(proj, 'rate') if rate is None else rate
+    if rate is None:
+        c_rate = project_or_default_settings(proj, 'rate')
+    else:
+        c_rate = rate
+
     p.add_fee(Fee('Development', c_rate, h))
     invoice.add_project(p)
 

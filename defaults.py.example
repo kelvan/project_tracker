@@ -1,14 +1,14 @@
-#coding: UTF-8
 # remove/add any part you like, make sure to use \\ for linebreaks
-address = r"firstname lastname \\ Street 1 \\ A-1234 Vienna \\ user@example.org \\ http://www.example.org"
-iban = "AT123456789012345678"
-bic = "ABCDATA1"
-name = "firstname lastname"
+address = r'firstname lastname \\ Street 1 \\ A-1234 Vienna \\ ' \
+          r'user@example.org \\ http://www.example.org'
+iban = 'AT123456789012345678'
+bic = 'ABCDATA1'
+name = 'Firstname Lastname'
 # not neccessary
-greeting = ""
+greeting = ''
 # You probably want to change this
-closing = u"Please transfer fees within 14 days,"
-currency = "Euro"
+closing = u'Please transfer fees within 14 days,'
+currency = 'Euro'
 # set your taxes
 vat = 0
 

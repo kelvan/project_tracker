@@ -1,5 +1,6 @@
 import pygal
 
+
 def project_distribution(invoice, type_='hours'):
     chart = pygal.Pie()
     chart.config.title = 'Project Distribution'

@@ -15,7 +15,7 @@ class Fee():
 class Project():
     def __init__(self, name, fees=None):
         if fees is None:
-            self.fees=[]
+            self.fees = []
         else:
             self.fees = fees
         self.name = name

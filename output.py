@@ -7,7 +7,8 @@ import settings
 
 def console(invoice):
     def hline():
-        return '+'.join(['-'*(p_len+1), '-'*(r_len),'-'*(h_len+4),'-'*(w_len+2)])
+        return '+'.join(['-'*(p_len+1), '-'*(r_len),
+                        '-'*(h_len+4), '-'*(w_len+2)])
 
     if not invoice.projects:
         print('nothing there')
@@ -59,9 +60,11 @@ def console(invoice):
                               ('%.2f' % r_avg).rjust(r_len),
                               ('%0.2f' % w_sum).rjust(w_len)))
 
+
 def pdf(invoice):
-    #TODO
+    # TODO
     return latex.pdflatex(invoice)
+
 
 def charts(invoice, types=None):
     if types is None:
