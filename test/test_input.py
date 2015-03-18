@@ -10,6 +10,9 @@ class TestCSVInput(unittest.TestCase):
         pass
 
     def test_load_valid_csv(self):
+        """ Test csv load module
+        test type conversions
+        """
         with tempfile.NamedTemporaryFile() as f:
             f.write(b'date;project;hours;note\n'
                     b'2000-01-01;Testproject;1.0;test note 1\n'
@@ -28,3 +31,25 @@ class TestCSVInput(unittest.TestCase):
                 self.assertEqual(hours, l['hours'])
                 self.assertIn('note', l)
                 self.assertEqual('test note %d' % (i+1), l['note'])
+
+    def test_load_invalid_csv(self):
+        """ Test loading an invalid broken
+        """
+        with tempfile.NamedTemporaryFile() as f:
+            f.write(b'date;project;hours;note\n'
+                    b'2000-01-01;Testproject;1.\n0;test note 1\n'
+                    b'2000-01-02;Testproject;2.5;test note 2\n')
+            f.seek(0)
+
+            self.assertRaises(ValueError, load_from_csv, f.name)
+
+    def test_load_invalid_csv_date(self):
+        """ Test load csv with invalid date
+        """
+        with tempfile.NamedTemporaryFile() as f:
+            f.write(b'date;project;hours;note\n'
+                    b'2000-02-30;Testproject;1.0;test note 1\n'
+                    b'2000-01-02;Testproject;2.5;test note 2\n')
+            f.seek(0)
+
+            self.assertRaises(ValueError, load_from_csv, f.name)
