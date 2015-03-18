@@ -1,2 +1,3 @@
 pygal
 Jinja2
+lxml
