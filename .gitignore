@@ -11,4 +11,4 @@ settings.py
 project_settings.py
 defaults.py
 *.private
-env
+env*
