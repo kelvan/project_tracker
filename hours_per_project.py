@@ -63,6 +63,7 @@ pdfdir = join(invoicedirectory, 'pdf')
 texdir = join(invoicedirectory, 'tex')
 
 
+# TODO move invoicestuff to module
 def get_invoicenumber(dte):
     dt = datetime.strftime(dte, '%y%m')
     c = sorted(filter(lambda f: re.match(dt+"\d\d.pdf", f),
@@ -92,47 +93,8 @@ settings.update(date=today, number=get_invoicenumber(today))
 
 invoice = Invoice(**settings)
 
-today = date.today()
 date_range = get_date_range(**vars(args))
-print(date_range)
-
-day = None
-if args.day:
-    day = args.day
-
-# XXX use tuple (from, to) as date range
-month = None
-if args.month:
-    month = args.month
-elif day:
-    month = today.month
-    if day > today.day:
-        # XXX should be replaced after building date range
-        month = month - 1 if month > 1 else 12
-
-year = None
-if args.year:
-    if args.year >= 1000:
-        year = args.year
-    else:
-        year = args.year + 2000
-    date_range = (date(year, 1, 1), date(year, 12, 31))
-elif month:
-    year = today.year
-    if month > today.month:
-        year -= 1
-
-    first_dom = date(year, month, 1)
-    last_dom = date(year, month, calendar.monthrange(year, month)[1])
-    date_range = (first_dom, last_dom)
-
-if args.today:
-    year, month, day = today.timetuple()[:3]
-
-date_ = [year, month, day]
-formatted_date = '-'.join([str(d).zfill(2) for d in date_ if d])
-if formatted_date:
-    print('Show for: %s' % formatted_date)
+print('From %s to %s' % date_range)
 
 rnd = args.round
 uncleared = args.uncleared
@@ -159,12 +121,8 @@ for w in lst:
             invoice.projects = []
         continue
 
-    if (date_range and in_range(w['date'], date_range)) or \
-       (not date_range and (not year or w['date'].year == year) and \
-       (not month or w['date'].month == month) and \
-       (not day or w['date'].day == day) and \
-       (not project or project.lower() == prj.lower())):
-
+    if (not date_range or in_range(w['date'], date_range)) and \
+       (not project or project.lower() == prj.lower()):
         h = float(w['hours'])
 
         if prj in hours:

@@ -24,16 +24,46 @@ def _get_current_week_range():
     return _get_week_range(today.year, week)
 
 
+def _get_month_range(year, month):
+    first_dom = date(year, month, 1)
+    last_dom = date(year, month, calendar.monthrange(year, month)[1])
+    return (first_dom, last_dom)
+
+
 def _get_year_range(year):
     return (date(year, 1, 1), date(year, 12, 31))
 
 
+# FIXME day > today.day --> month - 1
 def get_date_range(**args):
-    print(args)
+    today = date.today()
 
     if args.get('today', False):
-        today = date.today()
         return (today, today)
 
     if args.get('week', False):
         return _get_current_week_range()
+
+    year = args.get('year', None)
+    month = args.get('month', None)
+    day = args.get('day', None)
+
+    if year is None and month is None and day is None:
+        return None
+
+    if year is None:
+        year = today.year
+    else:
+        if year < 1000:
+            year += 2000
+        if month is None and day is None:
+            return _get_year_range(year)
+
+    if month is None:
+        month = today.month
+
+    if day is None:
+        return _get_month_range(year, month)
+    else:
+        d = date(year, month, day)
+        return (d, d)
