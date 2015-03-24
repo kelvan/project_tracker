@@ -4,7 +4,8 @@ import sys
 import os
 from os.path import dirname, join
 import subprocess
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
+import calendar
 import argparse
 import math
 import re
@@ -12,6 +13,7 @@ import re
 from input import load_from_csv
 import output
 import defaults
+from daterange import get_date_range, in_range
 from invoice import *
 from settings import *
 from project_settings import PROJECTS
@@ -28,9 +30,11 @@ date_group.add_argument('-y', metavar='year', help='filter by year',
                         default=None, dest='year', type=int)
 date_group.add_argument('-d', metavar='day', help='filter by day',
                         default=None, dest='day', type=int)
-# TODO Today invalid with day, month, year set
+# TODO Today/Week invalid with day, month, year set
 group.add_argument('-t', '--today', action='store_true',
                    help='show today')
+group.add_argument('--week', action='store_true',
+                   help='show current week')
 parser.add_argument('-p', metavar='project', help='filter by project',
                     default=None, dest='project')
 parser.add_argument('-i', '--invoice', action='store_true',
@@ -89,6 +93,8 @@ settings.update(date=today, number=get_invoicenumber(today))
 invoice = Invoice(**settings)
 
 today = date.today()
+date_range = get_date_range(**vars(args))
+print(date_range)
 
 day = None
 if args.day:
@@ -110,10 +116,15 @@ if args.year:
         year = args.year
     else:
         year = args.year + 2000
+    date_range = (date(year, 1, 1), date(year, 12, 31))
 elif month:
     year = today.year
     if month > today.month:
         year -= 1
+
+    first_dom = date(year, month, 1)
+    last_dom = date(year, month, calendar.monthrange(year, month)[1])
+    date_range = (first_dom, last_dom)
 
 if args.today:
     year, month, day = today.timetuple()[:3]
@@ -148,10 +159,11 @@ for w in lst:
             invoice.projects = []
         continue
 
-    if (not year or w['date'].year == year) and \
+    if (date_range and in_range(w['date'], date_range)) or \
+       (not date_range and (not year or w['date'].year == year) and \
        (not month or w['date'].month == month) and \
        (not day or w['date'].day == day) and \
-       (not project or project.lower() == prj.lower()):
+       (not project or project.lower() == prj.lower())):
 
         h = float(w['hours'])
 
