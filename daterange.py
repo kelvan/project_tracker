@@ -3,6 +3,8 @@ from datetime import date, timedelta
 
 
 def in_range(date_, date_range):
+    """ check if date_ is in given range (inclusive)
+    """
     return date_ >= date_range[0] and date_ <= date_range[1]
 
 
@@ -13,7 +15,7 @@ def _get_first_day_of_week(year, week):
     return day
 
 
-def _get_week_range(year=None, week=None):
+def _get_week_range(year, week):
     first_dow = _get_first_day_of_week(year, week)
     return (first_dow, first_dow + timedelta(6))
 
