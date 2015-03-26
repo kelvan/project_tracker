@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import sys
 import os
@@ -94,7 +94,8 @@ settings.update(date=today, number=get_invoicenumber(today))
 invoice = Invoice(**settings)
 
 date_range = get_date_range(**vars(args))
-print('From %s to %s' % date_range)
+if date_range:
+    print('From %s to %s' % date_range)
 
 rnd = args.round
 uncleared = args.uncleared
