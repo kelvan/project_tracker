@@ -32,6 +32,11 @@ def _get_month_range(year, month):
     return (first_dom, last_dom)
 
 
+def _get_current_month_range():
+    today = date.today()
+    return _get_month_range(today.year, today.month)
+
+
 def _get_year_range(year):
     return (date(year, 1, 1), date(year, 12, 31))
 
@@ -45,6 +50,9 @@ def get_date_range(**args):
 
     if args.get('week', False):
         return _get_current_week_range()
+
+    if args.get('month', False):
+        return _get_current_month_range()
 
     year = args.get('year', None)
     month = args.get('month', None)
