@@ -35,7 +35,7 @@ group.add_argument('-t', '--today', action='store_true',
                    help='show today')
 group.add_argument('--week', action='store_true',
                    help='show current week')
-group.add_argument('--month', action='store_true',
+group.add_argument('--month', action='store_true', dest='cmonth',
                    help='show current month')
 parser.add_argument('-p', metavar='project', help='filter by project',
                     default=None, dest='project')

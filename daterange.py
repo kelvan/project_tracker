@@ -51,7 +51,7 @@ def get_date_range(**args):
     if args.get('week', False):
         return _get_current_week_range()
 
-    if args.get('month', False):
+    if args.get('cmonth', False):
         return _get_current_month_range()
 
     year = args.get('year', None)
