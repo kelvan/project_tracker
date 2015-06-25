@@ -112,7 +112,7 @@ charts = args.charts
 try:
     lst = load_from_csv(args.inputfile)
 except ValueError as e:
-    print(e.message)
+    print(e)
     sys.exit(1)
 
 for w in lst:
