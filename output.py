@@ -31,7 +31,10 @@ def console(invoice):
     w_len = int(math.log10(int(w_sum)))+4
     w_len = max(w_len, len(head_wage))
     # max project hours len
-    h_len = int(math.log10(int(h_sum)))+3
+    if int(h_sum) >= 1:
+        h_len = int(math.log10(int(h_sum)))+3
+    else:
+        h_len = 3
     h_len = max(h_len, len(head_hours))
     # width of output
     c_len = p_len+h_len+3
