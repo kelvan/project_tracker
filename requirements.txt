@@ -1,3 +1,4 @@
 pygal
 Jinja2
 lxml
+python-dateutil

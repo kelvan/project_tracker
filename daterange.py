@@ -1,5 +1,6 @@
 import calendar
 from datetime import date, datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 
 def in_range(date_, date_range):
@@ -41,7 +42,6 @@ def _get_year_range(year):
     return (date(year, 1, 1), date(year, 12, 31))
 
 
-# FIXME day > today.day --> month - 1
 def get_date_range(first_date, **args):
     today = date.today()
 
@@ -91,4 +91,8 @@ def get_date_range(first_date, **args):
         return _get_month_range(year, month)
     else:
         d = date(year, month, day)
+        # Does not support future dates
+        if d > today:
+            last_month = today - relativedelta(months=1)
+            d = date(last_month.year, last_month.month, day)
         return (d, d)
