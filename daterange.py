@@ -1,5 +1,5 @@
 import calendar
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 
 def in_range(date_, date_range):
@@ -42,7 +42,7 @@ def _get_year_range(year):
 
 
 # FIXME day > today.day --> month - 1
-def get_date_range(**args):
+def get_date_range(first_date, **args):
     today = date.today()
 
     if args.get('today', False):
@@ -53,6 +53,21 @@ def get_date_range(**args):
 
     if args.get('cmonth', False):
         return _get_current_month_range()
+
+    start_date = args.get('from', None)
+    end_date = args.get('to', None)
+
+    if start_date or end_date:
+        if start_date:
+            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+        else:
+            start_date = first_date
+        if end_date:
+            end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+        else:
+            end_date = today
+
+        return (start_date, end_date)
 
     year = args.get('year', None)
     month = args.get('month', None)

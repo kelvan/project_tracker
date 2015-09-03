@@ -49,6 +49,9 @@ parser.add_argument('-w', '--hourly_rate', type=float,
                     help='overwrite hourly wage rate')
 parser.add_argument('-c', '--charts', action='store_true',
                     help='Render charts in browser')
+parser.add_argument('--from', help='show hours starting with date')
+parser.add_argument('--to', help='show hours until date')
+
 
 args = parser.parse_args()
 
@@ -95,7 +98,19 @@ settings.update(date=today, number=get_invoicenumber(today))
 
 invoice = Invoice(**settings)
 
-date_range = get_date_range(**vars(args))
+# load csv
+try:
+    lst = load_from_csv(args.inputfile)
+except ValueError as e:
+    print(e)
+    sys.exit(1)
+
+if len(lst) == 0:
+    print('Nothing found in file')
+    sys.exit(1)
+first_date = lst[0]['date']
+
+date_range = get_date_range(first_date, **vars(args))
 if date_range:
     print('From %s to %s' % date_range)
 
@@ -107,13 +122,6 @@ if args.hourly_rate:
     rate = args.hourly_rate
 
 charts = args.charts
-
-# load csv
-try:
-    lst = load_from_csv(args.inputfile)
-except ValueError as e:
-    print(e)
-    sys.exit(1)
 
 for w in lst:
     prj = w['project']
