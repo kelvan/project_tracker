@@ -42,6 +42,10 @@ def _get_year_range(year):
     return (date(year, 1, 1), date(year, 12, 31))
 
 
+def datify(date_str):
+    return datetime.strptime(date_str, '%Y-%m-%d').date()
+
+
 def get_date_range(first_date, **args):
     today = date.today()
 
@@ -59,11 +63,12 @@ def get_date_range(first_date, **args):
 
     if start_date or end_date:
         if start_date:
-            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+            start_date = datify(start_date)
         else:
             start_date = first_date
+
         if end_date:
-            end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+            end_date = datify(end_date)
         else:
             end_date = today
 
