@@ -10,3 +10,5 @@ templatefile = "template.tex"
 
 # create pie chart with -c option; more charts will follow
 charts = ['project_distribution_hours']
+
+workhours_per_day = [8, 8, 8, 8, 6, 0, 0]
