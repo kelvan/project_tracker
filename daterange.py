@@ -79,7 +79,7 @@ def get_date_range(first_date, **args):
     day = args.get('day', None)
 
     if year is None and month is None and day is None:
-        return None
+        return (first_date, today)
 
     if year is None:
         year = today.year

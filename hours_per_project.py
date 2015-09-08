@@ -49,6 +49,8 @@ parser.add_argument('-w', '--hourly_rate', type=float,
                     help='overwrite hourly wage rate')
 parser.add_argument('-c', '--charts', action='store_true',
                     help='Render charts in browser')
+parser.add_argument('-o', '--overtime', action='store_true',
+                    help='Show overtime')
 parser.add_argument('--from', help='show hours starting with date')
 parser.add_argument('--to', help='show hours until date')
 
@@ -162,4 +164,7 @@ if args.invoice:
     pdf = output.pdf(invoice)
     subprocess.call(('xdg-open', pdf))
 
-output.console(invoice)
+if args.overtime:
+    output.console(invoice, date_range=date_range)
+else:
+    output.console(invoice)

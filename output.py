@@ -1,11 +1,14 @@
-#coding: UTF-8
+# coding: UTF-8
+from __future__ import unicode_literals
+
 import math
 import latex
 import chart
 import settings
+from overtime.overtime import get_workhours
 
 
-def console(invoice):
+def console(invoice, date_range=None):
     def hline():
         return '+'.join(['-'*(p_len+1), '-'*(r_len),
                         '-'*(h_len+4), '-'*(w_len+2)])
@@ -52,16 +55,23 @@ def console(invoice):
     # print project information
     for project in invoice:
         proj_rate = project.avg_rate
-        print(u'%s | %s | %s | €%s' % (project.name.ljust(p_len),
+        print('%s | %s | %s | €%s' % (project.name.ljust(p_len),
               ('%0.1f' % project.sum_hours).rjust(h_len),
               ('%0.2f' % proj_rate).rjust(r_len),
               ('%0.2f' % project.sum_money).rjust(w_len)))
 
     print(hline())
     # print summary
-    print(u'%s | %s | €%s' % (('%0.1f' % h_sum).rjust(c_len),
+    print('%s | %s | €%s' % (('%.1f' % h_sum).rjust(c_len),
                               ('%.2f' % r_avg).rjust(r_len),
-                              ('%0.2f' % w_sum).rjust(w_len)))
+                              ('%.2f' % w_sum).rjust(w_len)))
+    if date_range:
+        print(hline())
+        overtime_sum = h_sum - get_workhours(*date_range)
+        print('%s | %s | %s | €%s' % ('Overtime'.ljust(p_len),
+                                 ('%.1f' % overtime_sum).rjust(h_len),
+                                 ('%.2f' % r_avg).rjust(r_len),
+                                 ('%.2f' % (overtime_sum*r_avg)).rjust(w_len)))
 
 
 def pdf(invoice):
