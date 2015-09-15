@@ -51,8 +51,8 @@ parser.add_argument('-c', '--charts', action='store_true',
                     help='Render charts in browser')
 parser.add_argument('-o', '--overtime', action='store_true',
                     help='Show overtime')
-parser.add_argument('--from', help='show hours starting with date')
-parser.add_argument('--to', help='show hours until date')
+parser.add_argument('--since', help='show hours starting with date')
+parser.add_argument('--until', help='show hours until date')
 
 
 args = parser.parse_args()
