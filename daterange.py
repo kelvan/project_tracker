@@ -58,8 +58,8 @@ def get_date_range(first_date, **args):
     if args.get('cmonth', False):
         return _get_current_month_range()
 
-    start_date = args.get('from', None)
-    end_date = args.get('to', None)
+    start_date = args.get('since', None)
+    end_date = args.get('until', None)
 
     if start_date or end_date:
         if start_date:
