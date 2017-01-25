@@ -1,4 +1,4 @@
-pygal
-Jinja2
-lxml
-python-dateutil
+pygal>=2,<3
+Jinja2<3
+lxml<3.8
+python-dateutil<2.7
