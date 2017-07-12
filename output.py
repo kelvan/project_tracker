@@ -56,7 +56,7 @@ def console(invoice, date_range=None):
     for project in invoice:
         proj_rate = project.avg_rate
         print('%s | %s | %s | €%s' % (project.name.ljust(p_len),
-              ('%0.1f' % project.sum_hours).rjust(h_len),
+              ('%0.2f' % project.sum_hours).rjust(h_len),
               ('%0.2f' % proj_rate).rjust(r_len),
               ('%0.2f' % project.sum_money).rjust(w_len)))
 
